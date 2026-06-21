@@ -1,0 +1,11 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Default CLI output (generated, not source)
+/fmcsa_leads.xlsx
+
+# OS
+.DS_Store
