@@ -60,7 +60,9 @@ The workbook has two sheets:
 - **Leads** — DOT number, company, phone, address, state, fleet size, drivers, cargo.
 - **QA Summary** — total leads, phone coverage, distinct states. A quick sanity check before the list goes to a sales team.
 
-A sample run for large Wyoming carriers is in `samples/wy_large_carriers.xlsx`.
+A sample run for large Wyoming carriers is in `samples/wy_large_carriers.xlsx`:
+
+![FMCSA lead list in Excel: a Leads sheet and a QA Summary sheet](docs/sample-output.png)
 
 ## Phone, and optional email
 
@@ -77,6 +79,19 @@ volume, point the website-discovery step at a keyed search API.
 Fleet-size filtering happens in Python, not in the API query, because the census
 stores unit counts as text. State and active-status filtering happen server-side.
 
+## Limitations and next steps
+
+Email enrichment depends on a free DuckDuckGo search to find each carrier's
+website. DuckDuckGo starts returning HTTP 202 throttle responses after roughly
+15 queries, so on a large run most website lookups come back empty. The code
+isolates that lookup in `find_carrier_website`, so swapping in a keyed search
+API (Brave Search, SerpAPI, or Bing) raises the volume ceiling without changing
+the rest of the pipeline.
+
+Planned next: a cargo-type filter, a CSV output option next to the Excel file,
+and a resume flag so an interrupted enrichment run continues instead of starting
+over.
+
 ## Tests
 
 ```bash
@@ -85,5 +100,6 @@ PYTHONPATH=. python -m pytest tests -q
 ```
 
 The tests cover phone normalization, DOT-number deduplication, fleet-size
-filtering, state-code validation, the query-builder, and the website-matching
-guard used in email enrichment. None of them touch the network.
+filtering, state-code validation, the query-builder, the website-matching guard
+used in email enrichment, and the styled Excel output (header fill, frozen pane,
+row banding). None of them touch the network.
