@@ -103,3 +103,7 @@ The tests cover phone normalization, DOT-number deduplication, fleet-size
 filtering, state-code validation, the query-builder, the website-matching guard
 used in email enrichment, and the styled Excel output (header fill, frozen pane,
 row banding). None of them touch the network.
+
+---
+
+Built by Adam Kramarczyk. More scrapers, data tools and live demos at [helban.dev](https://helban.dev).
